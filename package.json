@@ -1,0 +1,21 @@
+{
+    "name": "code-generator",
+    "description": "",
+    "homepage": "https://github.com/megaads-vn",
+    "author": "Megaads <info@megaads.vn>",
+    "keywords": ["uniq", "generator", "code generator"],
+    "license": "MIT",
+    "version": "1.0.0",
+    "main": "app.js",
+    "contributors": [],
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/megaads-vn/code-generator.io"
+    },
+    "dependencies": {
+        "socket.io": "1.*",
+        "ejs": "2.*",
+        "lru-cache": "*",
+        "crypto": "*"
+    }
+}
