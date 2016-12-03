@@ -4,7 +4,7 @@ var stringUtil = require(__dir + "/utils/string-util");
 function GeneratorController($logger, $event, $config, $redis) {
     this.generateCode = function(io) {
         var data = io.inputs["data"];
-        var length = io.inputs["code-length"] == null ? 8 : io.inputs["length"];
+        var length = io.inputs["code-length"] == null ? 8 : parseInt(io.inputs["code-length"]);
         var dataHash = data.hashHex();
         var result = "";
         $redis.get("data:" + length + ":" + dataHash, function(err, codeStorage) {
