@@ -7,7 +7,7 @@ function GeneratorController($logger, $event, $config, $redis) {
         var length = io.inputs["code-length"] == null ? 8 : io.inputs["length"];
         var dataHash = data.hashHex();
         var result = "";
-        $redis.get("data:" + dataHash, function(err, codeStorage) {
+        $redis.get("data:" + length + ":" + dataHash, function(err, codeStorage) {
             if (codeStorage != null) {
                 result = codeStorage;
                 io.json({
@@ -16,15 +16,15 @@ function GeneratorController($logger, $event, $config, $redis) {
                 });
             } else {
                 var generatedCode = stringUtil.hash(data, length);
-                $redis.get("code:" + generatedCode, function(err, dataHashStorage) {
+                $redis.get("code:" + length + ":" + generatedCode, function(err, dataHashStorage) {
                     if (dataHashStorage != null && dataHash != dataHashStorage) {
                         result = stringUtil.hash(data + data, length);
                         $logger.warning("Generate duplicated code:", data);
                     } else {
                         result = generatedCode;
                     }
-                    $redis.set("data:" + dataHash, result);
-                    $redis.set("code:" + result, dataHash);
+                    $redis.set("data:" + length + ":" + dataHash, result);
+                    $redis.set("code:" + length + ":" + result, dataHash);
                     io.json({
                         "status": "successful",
                         "result": result
